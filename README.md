@@ -1,4 +1,4 @@
-# ictihat-mcp
+# yargtAI-mcp
 
 > **Türk hukuku için bir MCP araç seti.** Avukat kendi yapay zekâsını (Claude,
 > ChatGPT…) getirir; bu **MCP sunucusu** ona Türk hukuku becerileri verir:
@@ -20,22 +20,22 @@ gerçektir ya da ⟦işaretlenir⟧.
 
 **Araştırma**
 
-| Araç | Ne yapar |
-|------|----------|
+| Araç                                      | Ne yapar                                                                                                                          |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | `ictihat_ara(anahtar, mahkeme?, boyut?)` | Hibrit (vektör + BM25) arama + cross-encoder reranker + alaka eşiği; yerelde sonuç zayıfsa GİB'den canlı çekip indeksler. |
-| `karar_oku(karar_id)` | Tam metin + künye. |
-| `kunye_dogrula(ifade)` | Bir karar_id/atıfın korpusta var olduğunu doğrular (`dogrulandi` / `olasi_eslesme` / `bulunamadi`). |
+| `karar_oku(karar_id)`                    | Tam metin + künye.                                                                                                               |
+| `kunye_dogrula(ifade)`                   | Bir karar_id/atıfın korpusta var olduğunu doğrular (`dogrulandi` / `olasi_eslesme` / `bulunamadi`).                     |
 
 **Dilekçe & duruşma hazırlığı**
 
-| Araç | Ne yapar |
-|------|----------|
-| `dilekce_sablonlari()` | Dilekçe şablonları + alanları (dava HMK m.119, cevap m.129). |
-| `dilekce_olustur(tur, alanlar)` | Metin dilekçe taslağı; eksik zorunlu alan ⟦EKSİK⟧. |
-| `dilekce_belge(tur, alanlar, dosya_adi?)` | Biçimli **Word (.docx)**; boş alanlar sarı doldurma slotu. |
-| `dilekce_udf(tur, alanlar, dosya_adi?)` | UYAP'a yüklenebilen **imzasız `.udf`**; eksik alanlar doldurulabilir `<field>`. Avukat UYAP'ta kendi e-imzasıyla imzalar. |
-| `durusma_hazirligi_sablonu()` | Duruşma hazırlık notunun yapısı + kaynak kuralı. |
-| `durusma_hazirligi(hazirlik)` | Kaynaklı hazırlık notu; **her maddeye kaynak zorunlu** (yoksa ⟦KAYNAK YOK⟧), uyarı metni sabit. |
+| Araç                                       | Ne yapar                                                                                                                               |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `dilekce_sablonlari()`                    | Dilekçe şablonları + alanları (dava HMK m.119, cevap m.129).                                                                       |
+| `dilekce_olustur(tur, alanlar)`           | Metin dilekçe taslağı; eksik zorunlu alan ⟦EKSİK⟧.                                                                               |
+| `dilekce_belge(tur, alanlar, dosya_adi?)` | Biçimli **Word (.docx)**; boş alanlar sarı doldurma slotu.                                                                    |
+| `dilekce_udf(tur, alanlar, dosya_adi?)`   | UYAP'a yüklenebilen **imzasız `.udf`**; eksik alanlar doldurulabilir `<field>`. Avukat UYAP'ta kendi e-imzasıyla imzalar. |
+| `durusma_hazirligi_sablonu()`             | Duruşma hazırlık notunun yapısı + kaynak kuralı.                                                                                 |
+| `durusma_hazirligi(hazirlik)`             | Kaynaklı hazırlık notu; **her maddeye kaynak zorunlu** (yoksa ⟦KAYNAK YOK⟧), uyarı metni sabit.                            |
 
 ## Kurulum
 
@@ -90,16 +90,16 @@ claude mcp add ictihat --scope project -- uv run ictihat-mcp
 
 ## Ortam değişkenleri
 
-| Değişken | Varsayılan | Açıklama |
-|----------|-----------|----------|
-| `ICTIHAT_DATA_DIR` | `./.ictihat_data` | İndeks klasörü |
-| `ICTIHAT_EMBED_MODEL` | `paraphrase-multilingual-MiniLM-L12-v2` | Gömme modeli |
-| `ICTIHAT_RERANK` | `1` | `0` = reranker kapalı (hafif) |
-| `ICTIHAT_RERANK_MODEL` | `BAAI/bge-reranker-v2-m3-int8` | Reranker modeli |
-| `ICTIHAT_THREADS` | çekirdek/2 (≤4) | ONNX iş parçacığı sınırı |
-| `ICTIHAT_RELEVANCE_MIN` | `0.30` | Alaka eşiği (altı elenir) |
-| `ICTIHAT_GIB_FALLBACK` | `1` | Zayıf sonuçta GİB canlı yedeği |
-| `ICTIHAT_DILEKCE_DIR` | `./dilekceler` | Üretilen .docx/.udf klasörü |
+| Değişken                | Varsayılan                               | Açıklama                          |
+| ------------------------- | ----------------------------------------- | ----------------------------------- |
+| `ICTIHAT_DATA_DIR`      | `./.ictihat_data`                       | İndeks klasörü                   |
+| `ICTIHAT_EMBED_MODEL`   | `paraphrase-multilingual-MiniLM-L12-v2` | Gömme modeli                       |
+| `ICTIHAT_RERANK`        | `1`                                     | `0` = reranker kapalı (hafif)    |
+| `ICTIHAT_RERANK_MODEL`  | `BAAI/bge-reranker-v2-m3-int8`          | Reranker modeli                     |
+| `ICTIHAT_THREADS`       | çekirdek/2 (≤4)                         | ONNX iş parçacığı sınırı    |
+| `ICTIHAT_RELEVANCE_MIN` | `0.30`                                  | Alaka eşiği (altı elenir)        |
+| `ICTIHAT_GIB_FALLBACK`  | `1`                                     | Zayıf sonuçta GİB canlı yedeği |
+| `ICTIHAT_DILEKCE_DIR`   | `./dilekceler`                          | Üretilen .docx/.udf klasörü      |
 
 ## Modüller
 
